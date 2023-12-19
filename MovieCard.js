@@ -1,14 +1,20 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 
-const MovieCard = ({ movie }) => {
+// MovieCard component
+const MovieCard = ({ movie, isFavorite, onToggleFavorite }) => {
   const { name, imdb_rating, genre, duration, img_link } = movie;
 
   return (
+    // Card container
     <View style={styles.cardContainer}>
       <View style={styles.cardImgContainer}>
         <Image style={styles.cardImg} source={{ uri: img_link }} />
+        <TouchableOpacity onPress={() => onToggleFavorite(movie.id)}>
+            <Text style={styles.favoriteButton}>{isFavorite ? 'Unfavorite' : 'Favorite'}</Text>
+        </TouchableOpacity>
       </View>
+        {/* Card details */}
       <View style={styles.cardDetails}>
         <Text style={styles.title}>{name}</Text>
         <Text style={styles.genre}>Genre: {genre}</Text>
@@ -23,21 +29,20 @@ const MovieCard = ({ movie }) => {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    width: 270, // Adjusted from rem to pixels
-    backgroundColor: '#0e2e53',
+    //width: 270, // Adjusted from rem to pixels
+    backgroundColor: 'black',
     shadowColor: '#000',
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 10,
-    borderRadius: 4,
-    elevation: 3,
-    marginBottom: 10, // For spacing between cards
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    borderRadius: 8,
+    overflow: 'hidden',
+    elevation: 5,
   },
   cardImgContainer: {
     width: '100%',
-    height: 300, // Adjust as needed
-    justifyContent: 'center',
-    alignItems: 'center',
+    height: 200, 
+    backgroundColor: '#000',
   },
   cardImg: {
     width: '100%',
@@ -45,16 +50,16 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   cardDetails: {
-    padding: 15, // Adjust as needed
-    backgroundColor: '#0e2e53',
+    padding: 10,
+    backgroundColor: 'gray',
   },
   title: {
     fontSize: 20,
-    color: '#FFFFFF', // Assuming white text
+    color: '#FFFFFF', 
   },
   genre: {
     fontSize: 16,
-    color: '#FFFFFF', // Assuming white text
+    color: '#FFFFFF', 
   },
   ratings: {
     flexDirection: 'row',

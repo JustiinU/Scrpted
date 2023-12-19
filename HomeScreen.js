@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import axios from 'axios';
-import MovieCard from './MovieCard.js'; // Ensure this is also converted to React Native
+import MovieCard from './MovieCard.js'; 
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const [movies, setMovies] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(new Set()); // Track login state
 
+  //Gets the movies from the API
   const getMovies = async () => {
     try {
       const { data } = await axios.get("https://movies-app.prakashsakari.repl.co/api/movies");
@@ -19,15 +21,47 @@ const HomeScreen = () => {
     getMovies();
   }, []);
 
+  const toggleFavorite = (movieId) => {
+    const newFavorites = new Set(favorites);
+    if (favorites.has(movieId)) {
+      newFavorites.delete(movieId);
+    } else {
+      newFavorites.add(movieId);
+    }
+    setFavorites(newFavorites);
+    // Optionally, persist the new favorites to AsyncStorage or a backend
+  };
+
+
+  const handleLoginLogoutPress = () => {
+    if (isLoggedIn) {
+      // Logout
+      setIsLoggedIn(false); // Update login state
+      // Navigate to the LoginScreen 
+      navigation.replace('Login');
+    } else {
+      // Navigate to the LoginScreen for the user to log in
+      navigation.navigate('Login');
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.heading}>Scrpted</Text>
+        <TouchableOpacity onPress={handleLoginLogoutPress} style={styles.loginLogoutButton}>
+          <Text style={styles.loginLogoutButtonText}>{isLoggedIn ? 'Logout' : 'Login'}</Text>
+        </TouchableOpacity>
       </View>
       
       <ScrollView style={styles.main}>
         {movies && movies.length > 0 && movies.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
+          <MovieCard 
+          key={movie.id} 
+          movie={movie} 
+          isFavorite={favorites.has(movie.id)}
+          onToggleFavorite={toggleFavorite}
+          />
         ))}
       </ScrollView>
     </View>
@@ -37,23 +71,32 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff', // Assuming white background
+    backgroundColor: '#fff', 
   },
   header: {
-    // Your header styles
-    height: 60, // Example height
-    backgroundColor: '#000', // Example background color
-    justifyContent: 'center',
+    height: 60, 
+    backgroundColor: '#000', 
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
+    paddingHorizontal: 15,
   },
   heading: {
-    // Your heading styles
-    color: '#fff', // Example text color
-    fontSize: 24, // Example font size
+    color: '#fff', 
+    fontSize: 24, 
   },
   main: {
-    // Your main content styles
     flex: 1,
+  },
+
+  loginLogoutButton: {
+    padding: 10, 
+    backgroundColor: 'black', 
+    borderRadius: 5, 
+  },
+  loginLogoutButtonText: {
+    color: '#fff', 
+    fontSize: 16, 
   },
 });
 

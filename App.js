@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './HomeScreen.js';
 import LoginScreen from './LoginScreen.js';
 import RegisterScreen from './RegisterScreen.js';
+import FavoritesScreen from './FavoritesScreen.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,14 +17,9 @@ export default function App() {
           headerBackTitle: 'Back',
         }}>
         <Stack.Screen 
-          name="Home" 
+          name="Home" npx
           component={HomeScreen}
-          options={{ 
-            title: 'Scrpted',
-            // ... other options ...
-          }}
         />
-
         <Stack.Screen 
         name = "Login" 
         component = {LoginScreen}
@@ -53,6 +49,13 @@ export default function App() {
             fontSize: 22,
           },
          }}
+        />
+        <Stack.Screen 
+          name="Favorites" 
+          component={FavoritesScreen}
+          options={{
+            title: 'Your Favorites',
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

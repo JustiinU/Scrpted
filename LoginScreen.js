@@ -2,18 +2,22 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+// 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  // Handle login button press
   const handleLogin = () => {
     console.log(username, password);
   };
 
+  // Handle register button press
   const handleRegister = () => {
     navigation.navigate('Register');
   };
 
+  // Handle forgot password button press
   const handleForgotPassword = () => {
     console.log('Go to forgot password page');
   };
