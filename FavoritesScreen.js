@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { ScrollView, StyleSheet, Text } from 'react-native';
 import MovieCard from './MovieCard'; // Make sure this is the correct path to your MovieCard component
 
-
 const fetchFavoritesFromBackend = async () => {
 
     // Simulate fetching favorites from a backend

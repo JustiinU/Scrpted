@@ -5,7 +5,8 @@ import MovieCard from './MovieCard.js';
 
 const HomeScreen = ({ navigation }) => {
   const [movies, setMovies] = useState([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(new Set()); // Track login state
+  const [favorites, setFavorites] = useState(new Set());
+  const [isLoggedIn, setIsLoggedIn] = useState(false); //False
 
   //Gets the movies from the API
   const getMovies = async () => {
@@ -29,7 +30,6 @@ const HomeScreen = ({ navigation }) => {
       newFavorites.add(movieId);
     }
     setFavorites(newFavorites);
-    // Optionally, persist the new favorites to AsyncStorage or a backend
   };
 
 
