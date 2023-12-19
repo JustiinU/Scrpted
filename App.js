@@ -14,11 +14,6 @@ export default function App() {
         screenOptions = {{
           headerBackTitle: 'Back',
         }}>
-         <Stack.Screen 
-          name="Welcome" 
-          component={home} 
-          options={{ title: 'Welcome to Scrpted' }}
-        />
         <Stack.Screen 
         name = "Login" 
         component = {LoginScreen}
